@@ -84,7 +84,7 @@
     <div class="toolbar">
       <label for="fileInput">Upload pages:</label>
       <input id="fileInput" type="file" accept="image/*" multiple />
-      <span id="counter" class="counter">No pages loaded</span>
+      <span id="counter" class="counter" role="status" aria-live="polite">No pages loaded</span>
     </div>
 
     <section class="viewer" aria-live="polite" aria-label="Manga page viewer">
@@ -172,6 +172,10 @@
         currentIndex += 1;
         updateUI();
       }
+    });
+
+    window.addEventListener('beforeunload', () => {
+      pages.forEach((url) => URL.revokeObjectURL(url));
     });
 
     updateUI();
