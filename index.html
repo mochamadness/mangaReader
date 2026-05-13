@@ -89,7 +89,7 @@
       <span id="counter" class="counter">No pages loaded</span>
     </div>
 
-    <section class="viewer" aria-live="polite">
+    <section class="viewer" aria-live="polite" aria-label="Manga page viewer">
       <div id="emptyState" class="empty">Choose one or more comic image files to start reading.</div>
       <img id="pageImage" alt="Current manga page" hidden />
     </section>
@@ -142,7 +142,7 @@
       const selectedFiles = Array.from(event.target.files || []);
       const files = selectedFiles.filter((file) => file.type.startsWith('image/'));
       if (files.length === 0) {
-        const message = selectedFiles.length > 0 ? 'No valid image files selected' : undefined;
+        const message = selectedFiles.length > 0 ? 'No valid image files selected' : 'No pages loaded';
         updateUI(message);
         return;
       }
