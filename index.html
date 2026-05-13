@@ -142,7 +142,8 @@
       const selectedFiles = Array.from(event.target.files || []);
       const files = selectedFiles.filter((file) => file.type.startsWith('image/'));
       if (files.length === 0) {
-        updateUI(selectedFiles.length > 0 ? 'No valid image files selected' : undefined);
+        const message = selectedFiles.length > 0 ? 'No valid image files selected' : undefined;
+        updateUI(message);
         return;
       }
 
@@ -165,7 +166,6 @@
       }
     });
 
-    window.addEventListener('beforeunload', resetPages);
     updateUI();
   </script>
 </body>
