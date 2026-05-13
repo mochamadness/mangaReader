@@ -82,10 +82,8 @@
     <p>Upload comic image pages and read them directly in your browser.</p>
 
     <div class="toolbar">
-      <label>
-        <span>Upload pages: </span>
-        <input id="fileInput" type="file" accept="image/*" multiple />
-      </label>
+      <label for="fileInput">Upload pages:</label>
+      <input id="fileInput" type="file" accept="image/*" multiple />
       <span id="counter" class="counter">No pages loaded</span>
     </div>
 
@@ -110,6 +108,16 @@
 
     let pages = [];
     let currentIndex = -1;
+    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp', '.avif'];
+
+    const isImageFile = (file) => {
+      if (file.type && file.type.startsWith('image/')) {
+        return true;
+      }
+
+      const name = (file.name || '').toLowerCase();
+      return imageExtensions.some((ext) => name.endsWith(ext));
+    };
 
     const updateUI = (message) => {
       const hasPages = pages.length > 0;
@@ -140,7 +148,7 @@
       resetPages();
 
       const selectedFiles = Array.from(event.target.files || []);
-      const files = selectedFiles.filter((file) => file.type.startsWith('image/'));
+      const files = selectedFiles.filter(isImageFile);
       if (files.length === 0) {
         const message = selectedFiles.length > 0 ? 'No valid image files selected' : 'No pages loaded';
         updateUI(message);
