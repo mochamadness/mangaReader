@@ -111,13 +111,13 @@
     let pages = [];
     let currentIndex = -1;
 
-    const updateUI = () => {
+    const updateUI = (message) => {
       const hasPages = pages.length > 0;
 
       if (!hasPages) {
         emptyState.hidden = false;
         pageImage.hidden = true;
-        counter.textContent = 'No pages loaded';
+        counter.textContent = message || 'No pages loaded';
       } else {
         emptyState.hidden = true;
         pageImage.hidden = false;
@@ -139,9 +139,10 @@
     fileInput.addEventListener('change', (event) => {
       resetPages();
 
-      const files = Array.from(event.target.files || []).filter((file) => file.type.startsWith('image/'));
+      const selectedFiles = Array.from(event.target.files || []);
+      const files = selectedFiles.filter((file) => file.type.startsWith('image/'));
       if (files.length === 0) {
-        updateUI();
+        updateUI(selectedFiles.length > 0 ? 'No valid image files selected' : undefined);
         return;
       }
 
@@ -164,6 +165,7 @@
       }
     });
 
+    window.addEventListener('beforeunload', resetPages);
     updateUI();
   </script>
 </body>
